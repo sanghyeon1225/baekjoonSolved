@@ -12,7 +12,7 @@ public class Main{
             
             for(int j = 0; j < a; j++){
                 result *= (b-j);
-                result /= (j+1);
+                result /= (j+1); // 원래는 a-j로 했었는데 그러면 분모에 0을 넣는 경우가 생겨서 오류 발생
             }
             
             System.out.println(result);
