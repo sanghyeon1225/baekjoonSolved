@@ -7,8 +7,8 @@ public class Main{
         for(int i = 0; i < a; i++){
             String s1 = s.next();
             System.out.print(s1.charAt(0));
-            System.out.println(s1.charAt(s1.length()-1));
+            System.out.print(s1.charAt(s1.length()-1));
+            System.out.println("");
         }
-        
     }
 }
