@@ -1,4 +1,3 @@
-import sys
 from itertools import combinations
 
 n, s = map(int, input().split()) # 수열 속 정수의 개수 n, 타겟 넘버 s 입력 받기
