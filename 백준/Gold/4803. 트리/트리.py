@@ -2,17 +2,18 @@ from collections import deque
 import sys
 
 def BFS(start):
-    isTree = True
-    q = [start]
-    while q:
-        now = q.pop(0)
-        if visited[now] == 1:
-            isTree = False
-        visited[now] = 1
-        for j in graph[now]:
-            if visited[j] == 0:
-                q.append(j)
-    return isTree
+    answer = True
+    queue = deque([start])
+    while queue:
+        v = queue.popleft()
+        if visited[v] == 1:
+            answer = False
+        visited[v] = 1
+        
+        for i in graph[v]:
+            if visited[i] == 0:
+                queue.append(i)
+    return answer
 
 caseNumber = 0
 
