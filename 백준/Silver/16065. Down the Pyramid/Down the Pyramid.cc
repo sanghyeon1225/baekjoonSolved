@@ -1,28 +1,36 @@
-#include <iostream>
+#include <cstdio>
 #include <algorithm>
+
 using namespace std;
-const int INF = 0x3f3f3f3f3f;
-const int maxn = 1000000 + 5;
-int b[maxn];
+
 int main() {
     int n;
-    cin >> n;
-    for (int i = 1; i <= n; i++)
-        cin >> b[i];
-    int mina1 = 0, maxa1 = INF;
-    int temp = 0;
+    int *numList;
+    int answer = 0;
+    scanf("%d", &n);
+    numList = new int[n];
 
-    for (int i = 1; i <= n; i++) {
-        temp = b[i] - temp;
-        if (i % 2)
-            maxa1 = min(maxa1, temp);
-        else
-            mina1 = max(mina1, -temp);
+    for (int i = 0; i < n; i++) {
+        scanf("%d", &numList[i]);
     }
-    // cout << mina1 << " " << maxa1 << endl;
-    if (maxa1 >= mina1)
-        cout << maxa1 - mina1 + 1;
-    else
-        cout << 0;
-    return 0;
+
+    int left = 0;
+    int right = 1000000000;
+
+    for (int i = 0 ; i < n; i++) {
+        int newLeft = numList[i] - right;
+        int newRight = numList[i] - left;
+
+        left = max(newLeft, 0);
+        right = newRight;
+    }
+
+    if (right < 0) {
+        printf("%d", 0);
+    }
+    else {
+        printf("%d", right - left + 1);
+    }
+    
 }
+
