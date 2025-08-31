@@ -6,27 +6,16 @@ test = int(sys.stdin.readline())
 for i in range(test):
     command = sys.stdin.readline().rstrip()
     n = int(sys.stdin.readline())
-    data = sys.stdin.readline()[1:-2].split(",")
-    q = deque([])
+    q = deque(sys.stdin.readline().strip()[1:-1].split(","))
     is_reverse = False
-    count = 0
     
-    for i in data:
-        q.append(i)
-    
-    for i in command:
-        if i == "D":
-            count += 1
-    if count > n:
+    if command.count("D") > n:
         print("error")
-        continue
+        continue 
     
     for i in command:
         if i == "R":
-            if is_reverse:
-                is_reverse = False
-            else:
-                is_reverse = True
+            is_reverse = not is_reverse
         elif i == "D":
             if is_reverse:
                 q.pop()
@@ -35,5 +24,5 @@ for i in range(test):
                 
     if is_reverse:
         q.reverse()
-    print("[", ",".join(list(q)), "]", sep="")
+    print("[" + ",".join(q) + "]")
     
