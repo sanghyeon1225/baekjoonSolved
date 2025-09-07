@@ -1,26 +1,32 @@
-while True :
-    a = input()
+import sys
+
+while(True):
+    flag = True
+    data = list(sys.stdin.readline().rstrip())
+    if (len(data) == 1 and data[-1] == "."):
+        exit(0)
+
     stack = []
-
-    if a == "." :
-        break
-
-    for i in a :
-        if i == '[' or i == '(' :
-            stack.append(i)
-        elif i == ']' :
-            if len(stack) != 0 and stack[-1] == '[' :
-                stack.pop() # 맞으면 지워서 stack을 비워줌 0 = yes
-            else : 
-                stack.append(']')
-                break
-        elif i == ')' :
-            if len(stack) != 0 and stack[-1] == '(' :
+    
+    for i in range(len(data)):
+        if data[i] in ("(", "["):
+            stack.append(data[i])
+        elif data[i] == ")":
+            if stack and stack[-1] == "(":
                 stack.pop()
-            else :
-                stack.append(')')
-                break
-    if len(stack) == 0 :
-        print('yes')
-    else :
-        print('no')
+            else:
+                flag = False
+        elif data[i] == "]":
+            if stack and stack[-1] == "[":
+                stack.pop()
+            else:
+                flag = False
+    
+    if flag and not stack:
+        print("yes")
+        continue
+    else:
+        print("no")
+    
+    
+    
