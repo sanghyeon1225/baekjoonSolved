@@ -16,7 +16,7 @@ def bfs():
             nx = x + dx[i]
             ny = y + dy[i]
             
-            if (r > nx >= 0 and c > ny >= 0 and board[nx][ny] in (".", "@")):
+            if (r > nx >= 0 and c > ny >= 0 and board[nx][ny] == "."):
                 if (time < 0):
                     board[nx][ny] = "*"
                     q.append((nx, ny, -1))
