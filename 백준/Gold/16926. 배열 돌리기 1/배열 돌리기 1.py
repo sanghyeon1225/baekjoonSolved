@@ -1,48 +1,52 @@
-import sys
 from collections import deque
 
-input = sys.stdin.readline
+n, m, r = map(int, input().split())
 
-def solve():
-    N, M, R = map(int, input().split())
-    matrix = [list(map(int, input().split())) for _ in range(N)]
+data = [list(map(int, input().split()))for _ in range(n)]
+
+layer = min(n, m) // 2
+
+for k in range(layer):
+    deq = deque()   
+    top, left = k, k
+    bottom, right = n - 1 - k, m - 1 - k
     
-    answer = [[0] * M for _ in range(N)]
-    layers = min(N, M) // 2
+    # 왼, 아, 오, 위 순서대로 돌면서 deq에 추가하고
+    # rotate 돌린다
+    # 그 후 data를 다시 수정해준다
+    
+    # 왼
+    for i in range(top, bottom):
+        deq.append(data[i][left])
+    
+    # 아
+    for i in range(left, right):
+        deq.append(data[bottom][i])
+    
+    # 오
+    for i in range(bottom, top, -1):
+        deq.append(data[i][right])
 
-    for k in range(layers):
-        queue = deque()
-        
-        # 윗변 (좌 -> 우)
-        for j in range(k, M - k):
-            queue.append(matrix[k][j])
-        # 우측변 (상 -> 하, 중복 모서리 제외)
-        for i in range(k + 1, N - k - 1):
-            queue.append(matrix[i][M - 1 - k])
-        # 밑변 (우 -> 좌, k번째 행)
-        for j in range(M - 1 - k, k - 1, -1):
-            queue.append(matrix[N - 1 - k][j])
-        # 좌측변 (하 -> 상, 중복 모서리 제외)
-        for i in range(N - 2 - k, k, -1):
-            queue.append(matrix[i][k])
-            
-        queue.rotate(-R)
-        
-        # 윗변
-        for j in range(k, M - k):
-            answer[k][j] = queue.popleft()
-        # 우측변
-        for i in range(k + 1, N - k - 1):
-            answer[i][M - 1 - k] = queue.popleft()
-        # 밑변
-        for j in range(M - 1 - k, k - 1, -1):
-            answer[N - 1 - k][j] = queue.popleft()
-        # 좌측변
-        for i in range(N - 2 - k, k, -1):
-            answer[i][k] = queue.popleft()
+    # 위
+    for i in range(right, left, -1):
+        deq.append(data[top][i])
+    
+    deq.rotate(r)
+    
+    # 왼
+    for i in range(top, bottom):
+        data[i][left] = deq.popleft()
+    # 아
+    for i in range(left, right):
+        data[bottom][i] = deq.popleft()
+    
+    # 오
+    for i in range(bottom, top, -1):
+        data[i][right] = deq.popleft()
 
-    # 출력
-    for row in answer:
-        print(*(row))
+    # 위
+    for i in range(right, left, -1):
+        data[top][i] = deq.popleft()
 
-solve()
+for d in data:
+    print(*d)
